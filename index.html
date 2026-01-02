@@ -995,12 +995,7 @@
                     <span>Check</span>
                 </button>
             </div>
-            <div class="sample-vins">
-                <span class="sample-label">Try:</span>
-                <button class="sample-btn" onclick="useSampleVIN('4JGDA5HB6JB180152')">Mercedes GLE</button>
-                <button class="sample-btn" onclick="useSampleVIN('1G1YY22G965109999')">Corvette</button>
-                <button class="sample-btn" onclick="useSampleVIN('5YJSA1E26MF123456')">Tesla</button>
-            </div>
+
         </div>
     </section>
 
@@ -1150,7 +1145,7 @@
 
     <script>
         // Configuration
-        const API_KEY = '1d7500fbe21fe7cb27cb6dfbd49fcbb7';
+        const API_KEY = '949b6a55b4522a594a765f6b33a73c20';
         const API_BASE = 'https://auctionsapi.com/api';
 
         // State
@@ -1240,8 +1235,8 @@
         }
 
         function displayResults(data, vin) {
+            hideLoading();
             document.getElementById('emptyState').style.display = 'none';
-            document.getElementById('loadingState').classList.remove('active');
             document.getElementById('resultsSection').classList.add('active');
 
             // Vehicle name

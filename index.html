@@ -234,34 +234,6 @@
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .sample-vins {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .sample-label {
-            font-size: 12px;
-            color: var(--gray-500);
-        }
-
-        .sample-btn {
-            padding: 6px 10px;
-            background: var(--gray-100);
-            border: 1px solid var(--gray-200);
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--gray-600);
-            cursor: pointer;
-            transition: all 0.15s;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .sample-btn:active { background: var(--gray-200); }
-
         /* Main Content */
         .main-content {
             max-width: 800px;
@@ -972,7 +944,7 @@
         .scanner-modal.active { display: flex; }
 
         .scanner-header {
-            padding: 16px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -989,6 +961,32 @@
         }
 
         .scanner-title i { color: var(--primary); }
+
+        .scanner-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scanner-torch-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+
+        .scanner-torch-btn.active {
+            background: var(--warning);
+            color: white;
+        }
 
         .scanner-close {
             width: 40px;
@@ -1030,13 +1028,14 @@
         }
 
         .scanner-frame {
-            width: 90%;
-            max-width: 400px;
-            height: 80px;
+            width: 92%;
+            max-width: 420px;
+            height: 90px;
             border: 3px solid var(--primary);
             border-radius: 12px;
             position: relative;
-            background: rgba(37, 99, 235, 0.1);
+            background: rgba(37, 99, 235, 0.08);
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
         }
 
         .scanner-frame::before {
@@ -1045,34 +1044,125 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: var(--primary);
-            animation: scanLine 2s linear infinite;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scanLine 1.5s ease-in-out infinite;
         }
 
         @keyframes scanLine {
-            0%, 100% { top: 0; opacity: 1; }
-            50% { top: calc(100% - 2px); opacity: 0.5; }
+            0%, 100% { top: 0; }
+            50% { top: calc(100% - 3px); }
+        }
+
+        .scanner-corners {
+            position: absolute;
+            inset: -3px;
+        }
+
+        .scanner-corners::before,
+        .scanner-corners::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 4px solid white;
+        }
+
+        .scanner-corners::before {
+            top: 0;
+            left: 0;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 8px 0 0 0;
+        }
+
+        .scanner-corners::after {
+            top: 0;
+            right: 0;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 0 8px 0 0;
+        }
+
+        .scanner-frame .scanner-corners-bottom {
+            position: absolute;
+            inset: 0;
+        }
+
+        .scanner-frame .scanner-corners-bottom::before,
+        .scanner-frame .scanner-corners-bottom::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border: 4px solid white;
+        }
+
+        .scanner-frame .scanner-corners-bottom::before {
+            bottom: 0;
+            left: 0;
+            border-right: none;
+            border-top: none;
+            border-radius: 0 0 0 8px;
+        }
+
+        .scanner-frame .scanner-corners-bottom::after {
+            bottom: 0;
+            right: 0;
+            border-left: none;
+            border-top: none;
+            border-radius: 0 0 8px 0;
         }
 
         .scanner-hint {
             color: white;
             font-size: 14px;
-            margin-top: 20px;
+            margin-top: 24px;
             text-align: center;
             padding: 0 20px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
-        .scanner-hint i { margin-right: 6px; color: var(--primary); }
+        .scanner-hint i { margin-right: 6px; color: var(--warning); }
 
         .scanner-footer {
-            padding: 20px;
+            padding: 16px;
             background: var(--gray-900);
+        }
+
+        .scanner-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .scanner-capture-btn {
+            flex: 1;
+            height: 56px;
+            background: var(--primary);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.15s;
+        }
+
+        .scanner-capture-btn:hover { background: var(--primary-dark); }
+        .scanner-capture-btn:active { transform: scale(0.98); }
+        .scanner-capture-btn:disabled { 
+            background: var(--gray-600); 
+            cursor: not-allowed; 
         }
 
         .scanner-status {
             text-align: center;
-            padding: 14px;
+            padding: 12px;
             background: var(--gray-800);
             border-radius: var(--radius);
             color: white;
@@ -1092,9 +1182,33 @@
             animation: spin 0.8s linear infinite;
         }
 
+        .scanner-status.success {
+            background: var(--success);
+        }
+
         .scanner-status.error {
             background: var(--danger-light);
             color: var(--danger);
+        }
+
+        .scanner-status.processing {
+            background: var(--primary);
+        }
+
+        .scanner-progress {
+            margin-top: 8px;
+            height: 4px;
+            background: var(--gray-700);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .scanner-progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.3s;
+            width: 0%;
         }
 
         /* VIN Confirmation Modal */
@@ -1126,37 +1240,36 @@
         }
 
         .confirm-header {
-            padding: 20px;
+            padding: 24px 20px 16px;
             text-align: center;
-            border-bottom: 1px solid var(--gray-100);
         }
 
         .confirm-icon {
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             background: var(--success-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 12px;
-            font-size: 24px;
+            margin: 0 auto 16px;
+            font-size: 28px;
             color: var(--success);
         }
 
         .confirm-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             margin-bottom: 4px;
         }
 
         .confirm-subtitle {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gray-500);
         }
 
         .confirm-vin-display {
-            padding: 20px;
+            padding: 16px 20px 20px;
             text-align: center;
         }
 
@@ -1171,27 +1284,27 @@
 
         .confirm-vin-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             color: var(--gray-900);
             background: var(--gray-100);
-            padding: 14px 20px;
+            padding: 16px 20px;
             border-radius: var(--radius);
             word-break: break-all;
         }
 
         .confirm-actions {
-            padding: 16px 20px 20px;
+            padding: 0 20px 24px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .confirm-btn {
             flex: 1;
-            padding: 14px;
+            padding: 16px;
             border-radius: var(--radius);
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
@@ -1278,7 +1391,6 @@
                     <span>Check</span>
                 </button>
             </div>
-
         </div>
     </section>
 
@@ -1433,24 +1545,42 @@
                 <i class="fas fa-camera"></i>
                 Scan VIN
             </div>
-            <button class="scanner-close" onclick="closeScanner()">
-                <i class="fas fa-times"></i>
-            </button>
+            <div class="scanner-header-actions">
+                <button id="torchBtn" class="scanner-torch-btn" onclick="toggleTorch()" title="Toggle flashlight" style="display: none;">
+                    <i class="fas fa-bolt"></i>
+                </button>
+                <button class="scanner-close" onclick="closeScanner()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
         </div>
         <div class="scanner-body">
-            <video id="scannerVideo" class="scanner-video" autoplay playsinline></video>
+            <video id="scannerVideo" class="scanner-video" autoplay playsinline muted></video>
+            <canvas id="scannerCanvas" style="display: none;"></canvas>
             <div class="scanner-overlay">
-                <div class="scanner-frame"></div>
+                <div class="scanner-frame">
+                    <div class="scanner-corners"></div>
+                    <div class="scanner-corners-bottom"></div>
+                </div>
                 <p class="scanner-hint">
-                    <i class="fas fa-lightbulb"></i>
-                    Position the VIN within the frame
+                    <i class="fas fa-info-circle"></i>
+                    Position VIN plate within the frame
                 </p>
             </div>
         </div>
         <div class="scanner-footer">
+            <div class="scanner-actions">
+                <button id="captureBtn" class="scanner-capture-btn" onclick="captureAndScan()">
+                    <i class="fas fa-crosshairs"></i>
+                    <span>Capture & Scan</span>
+                </button>
+            </div>
             <div id="scannerStatus" class="scanner-status">
-                <div class="spinner"></div>
-                <span>Scanning for VIN...</span>
+                <i class="fas fa-video"></i>
+                <span>Camera ready - Position VIN and tap Capture</span>
+            </div>
+            <div id="scannerProgress" class="scanner-progress" style="display: none;">
+                <div id="scannerProgressBar" class="scanner-progress-bar"></div>
             </div>
         </div>
     </div>
@@ -1462,8 +1592,8 @@
                 <div class="confirm-icon">
                     <i class="fas fa-check"></i>
                 </div>
-                <h3 class="confirm-title">VIN Detected</h3>
-                <p class="confirm-subtitle">Please verify the scanned VIN</p>
+                <h3 class="confirm-title">VIN Detected!</h3>
+                <p class="confirm-subtitle">Please verify the scanned VIN is correct</p>
             </div>
             <div class="confirm-vin-display">
                 <div class="confirm-vin-label">Detected VIN</div>
@@ -1492,14 +1622,39 @@
         let images = [];
         let touchStartX = 0;
         let scannerStream = null;
-        let scannerInterval = null;
         let scannedVIN = '';
-        let isScanning = false;
+        let tesseractWorker = null;
+        let torchEnabled = false;
+        let isProcessing = false;
 
         // DOM Elements
         const vinInput = document.getElementById('vinInput');
         const vinCounter = document.getElementById('vinCounter');
         const searchBtn = document.getElementById('searchBtn');
+
+        // Initialize Tesseract Worker on page load for faster scanning
+        async function initTesseractWorker() {
+            try {
+                tesseractWorker = await Tesseract.createWorker('eng', 1, {
+                    logger: (m) => {
+                        if (m.status === 'recognizing text' && m.progress) {
+                            updateProgress(Math.round(m.progress * 100));
+                        }
+                    }
+                });
+                // Optimize for VIN characters
+                await tesseractWorker.setParameters({
+                    tessedit_char_whitelist: 'ABCDEFGHJKLMNPRSTUVWXYZ0123456789',
+                    tessedit_pageseg_mode: '7', // Single line
+                });
+                console.log('Tesseract worker initialized');
+            } catch (err) {
+                console.error('Failed to initialize Tesseract:', err);
+            }
+        }
+
+        // Start loading Tesseract in background
+        initTesseractWorker();
 
         // Input handling
         vinInput.addEventListener('input', function(e) {
@@ -1525,13 +1680,6 @@
                 else prevImage();
             }
         }, { passive: true });
-
-        function useSampleVIN(vin) {
-            vinInput.value = vin;
-            vinCounter.textContent = `${vin.length}/17`;
-            vinCounter.classList.add('valid');
-            verifyVIN();
-        }
 
         function validateVIN(vin) {
             if (vin.length !== 17) return { valid: false, message: 'VIN must be exactly 17 characters.' };
@@ -1924,42 +2072,61 @@
             const scannerModal = document.getElementById('scannerModal');
             const video = document.getElementById('scannerVideo');
             const statusEl = document.getElementById('scannerStatus');
+            const captureBtn = document.getElementById('captureBtn');
+            const torchBtn = document.getElementById('torchBtn');
             
             scannerModal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            statusEl.className = 'scanner-status';
-            statusEl.innerHTML = '<div class="spinner"></div><span>Starting camera...</span>';
+            // Reset state
+            captureBtn.disabled = true;
+            torchBtn.style.display = 'none';
+            torchEnabled = false;
+            
+            updateScannerStatus('loading', 'Starting camera...');
             
             try {
-                // Request camera access with preference for back camera
-                scannerStream = await navigator.mediaDevices.getUserMedia({
+                // Request camera access with HD resolution for better OCR
+                const constraints = {
                     video: {
                         facingMode: { ideal: 'environment' },
-                        width: { ideal: 1920 },
-                        height: { ideal: 1080 }
+                        width: { ideal: 1920, min: 1280 },
+                        height: { ideal: 1080, min: 720 },
+                        focusMode: { ideal: 'continuous' },
+                        exposureMode: { ideal: 'continuous' }
                     }
+                };
+                
+                scannerStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = scannerStream;
+                
+                await new Promise((resolve) => {
+                    video.onloadedmetadata = () => {
+                        video.play().then(resolve);
+                    };
                 });
                 
-                video.srcObject = scannerStream;
-                await video.play();
+                // Check if torch is available
+                const track = scannerStream.getVideoTracks()[0];
+                const capabilities = track.getCapabilities ? track.getCapabilities() : {};
+                if (capabilities.torch) {
+                    torchBtn.style.display = 'flex';
+                }
                 
-                statusEl.innerHTML = '<div class="spinner"></div><span>Scanning for VIN...</span>';
-                
-                // Start scanning loop
-                isScanning = true;
-                startScanningLoop();
+                captureBtn.disabled = false;
+                updateScannerStatus('ready', 'Camera ready - Position VIN and tap Capture');
                 
             } catch (error) {
                 console.error('Camera error:', error);
-                statusEl.className = 'scanner-status error';
                 
                 if (error.name === 'NotAllowedError') {
-                    statusEl.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Camera access denied. Please allow camera permissions.</span>';
+                    updateScannerStatus('error', 'Camera access denied. Please allow camera permissions and try again.');
                 } else if (error.name === 'NotFoundError') {
-                    statusEl.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>No camera found on this device.</span>';
+                    updateScannerStatus('error', 'No camera found on this device.');
+                } else if (error.name === 'NotReadableError') {
+                    updateScannerStatus('error', 'Camera is in use by another application.');
                 } else {
-                    statusEl.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Unable to access camera. Please try again.</span>';
+                    updateScannerStatus('error', 'Unable to access camera. Please try again.');
                 }
             }
         }
@@ -1967,14 +2134,6 @@
         function closeScanner() {
             const scannerModal = document.getElementById('scannerModal');
             const video = document.getElementById('scannerVideo');
-            
-            isScanning = false;
-            
-            // Stop scanning interval
-            if (scannerInterval) {
-                clearInterval(scannerInterval);
-                scannerInterval = null;
-            }
             
             // Stop camera stream
             if (scannerStream) {
@@ -1985,81 +2144,214 @@
             video.srcObject = null;
             scannerModal.classList.remove('active');
             document.body.style.overflow = '';
+            torchEnabled = false;
+            isProcessing = false;
+            
+            // Reset UI
+            document.getElementById('scannerProgress').style.display = 'none';
+            document.getElementById('scannerProgressBar').style.width = '0%';
         }
         
-        function startScanningLoop() {
-            const video = document.getElementById('scannerVideo');
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
+        async function toggleTorch() {
+            if (!scannerStream) return;
             
-            // Scan every 1.5 seconds to avoid overloading
-            scannerInterval = setInterval(async () => {
-                if (!isScanning || !scannerStream) return;
-                
-                // Set canvas size to video size
+            const track = scannerStream.getVideoTracks()[0];
+            const torchBtn = document.getElementById('torchBtn');
+            
+            try {
+                torchEnabled = !torchEnabled;
+                await track.applyConstraints({
+                    advanced: [{ torch: torchEnabled }]
+                });
+                torchBtn.classList.toggle('active', torchEnabled);
+            } catch (err) {
+                console.error('Torch error:', err);
+                torchEnabled = false;
+            }
+        }
+        
+        function updateScannerStatus(type, message) {
+            const statusEl = document.getElementById('scannerStatus');
+            statusEl.className = 'scanner-status';
+            
+            let icon = '';
+            switch (type) {
+                case 'loading':
+                    icon = '<div class="spinner"></div>';
+                    break;
+                case 'ready':
+                    icon = '<i class="fas fa-video"></i>';
+                    break;
+                case 'processing':
+                    statusEl.classList.add('processing');
+                    icon = '<div class="spinner"></div>';
+                    break;
+                case 'success':
+                    statusEl.classList.add('success');
+                    icon = '<i class="fas fa-check-circle"></i>';
+                    break;
+                case 'error':
+                    statusEl.classList.add('error');
+                    icon = '<i class="fas fa-exclamation-circle"></i>';
+                    break;
+            }
+            
+            statusEl.innerHTML = `${icon}<span>${message}</span>`;
+        }
+        
+        function updateProgress(percent) {
+            const progressBar = document.getElementById('scannerProgressBar');
+            progressBar.style.width = `${percent}%`;
+        }
+        
+        async function captureAndScan() {
+            if (isProcessing || !scannerStream) return;
+            
+            isProcessing = true;
+            const video = document.getElementById('scannerVideo');
+            const canvas = document.getElementById('scannerCanvas');
+            const ctx = canvas.getContext('2d');
+            const captureBtn = document.getElementById('captureBtn');
+            const progressEl = document.getElementById('scannerProgress');
+            
+            captureBtn.disabled = true;
+            progressEl.style.display = 'block';
+            updateProgress(0);
+            updateScannerStatus('processing', 'Processing image...');
+            
+            try {
+                // Set canvas to video dimensions
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
                 
-                // Draw current video frame to canvas
+                // Draw current frame
                 ctx.drawImage(video, 0, 0);
                 
-                // Get image data (focus on center region where VIN frame is)
-                const centerY = canvas.height * 0.35;
-                const centerHeight = canvas.height * 0.3;
+                // Get the center region (where the frame is)
+                const frameWidth = canvas.width * 0.92;
+                const frameHeight = canvas.height * 0.15;
+                const frameX = (canvas.width - frameWidth) / 2;
+                const frameY = (canvas.height - frameHeight) / 2;
                 
-                try {
-                    // Run OCR on the frame
-                    const result = await Tesseract.recognize(canvas, 'eng', {
-                        logger: () => {} // Suppress logs
+                // Create a cropped canvas for the frame region
+                const croppedCanvas = document.createElement('canvas');
+                croppedCanvas.width = frameWidth;
+                croppedCanvas.height = frameHeight;
+                const croppedCtx = croppedCanvas.getContext('2d');
+                
+                // Draw cropped region
+                croppedCtx.drawImage(canvas, frameX, frameY, frameWidth, frameHeight, 0, 0, frameWidth, frameHeight);
+                
+                // Apply image preprocessing for better OCR
+                const imageData = croppedCtx.getImageData(0, 0, frameWidth, frameHeight);
+                const preprocessed = preprocessImage(imageData);
+                croppedCtx.putImageData(preprocessed, 0, 0);
+                
+                updateScannerStatus('processing', 'Recognizing text...');
+                
+                // Run OCR
+                let result;
+                if (tesseractWorker) {
+                    result = await tesseractWorker.recognize(croppedCanvas);
+                } else {
+                    // Fallback if worker not ready
+                    result = await Tesseract.recognize(croppedCanvas, 'eng', {
+                        logger: (m) => {
+                            if (m.status === 'recognizing text' && m.progress) {
+                                updateProgress(Math.round(m.progress * 100));
+                            }
+                        }
                     });
-                    
-                    // Search for VIN pattern in recognized text
-                    const text = result.data.text.toUpperCase().replace(/\s/g, '');
-                    const vinMatch = findVINInText(text);
-                    
-                    if (vinMatch) {
-                        isScanning = false;
-                        clearInterval(scannerInterval);
-                        scannerInterval = null;
-                        
-                        scannedVIN = vinMatch;
-                        showVINConfirmation(vinMatch);
-                    }
-                } catch (err) {
-                    console.error('OCR error:', err);
                 }
-            }, 1500);
+                
+                updateProgress(100);
+                
+                // Extract VIN from result
+                const text = result.data.text;
+                const vin = extractVIN(text);
+                
+                if (vin) {
+                    updateScannerStatus('success', 'VIN detected!');
+                    scannedVIN = vin;
+                    
+                    // Short delay to show success, then show confirmation
+                    setTimeout(() => {
+                        showVINConfirmation(vin);
+                    }, 500);
+                } else {
+                    updateScannerStatus('error', 'No VIN found. Please reposition and try again.');
+                    captureBtn.disabled = false;
+                    isProcessing = false;
+                }
+                
+            } catch (err) {
+                console.error('OCR error:', err);
+                updateScannerStatus('error', 'Scan failed. Please try again.');
+                captureBtn.disabled = false;
+                isProcessing = false;
+            }
+            
+            progressEl.style.display = 'none';
         }
         
-        function findVINInText(text) {
-            // VIN is 17 characters, alphanumeric excluding I, O, Q
-            const vinRegex = /[A-HJ-NPR-Z0-9]{17}/g;
-            const matches = text.match(vinRegex);
+        function preprocessImage(imageData) {
+            const data = imageData.data;
+            
+            // Convert to grayscale and increase contrast
+            for (let i = 0; i < data.length; i += 4) {
+                // Grayscale
+                const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+                
+                // Increase contrast
+                let adjusted = ((gray - 128) * 1.5) + 128;
+                
+                // Threshold to black/white for cleaner OCR
+                adjusted = adjusted > 140 ? 255 : 0;
+                
+                data[i] = adjusted;
+                data[i + 1] = adjusted;
+                data[i + 2] = adjusted;
+            }
+            
+            return imageData;
+        }
+        
+        function extractVIN(text) {
+            // Clean up the text
+            let cleaned = text.toUpperCase()
+                .replace(/[^A-Z0-9\s]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+            
+            // Common OCR corrections for VIN
+            cleaned = cleaned
+                .replace(/O/g, '0')  // O -> 0
+                .replace(/I/g, '1')  // I -> 1
+                .replace(/Q/g, '0')  // Q -> 0
+                .replace(/\s/g, ''); // Remove spaces
+            
+            // Try to find a 17-character sequence that could be a VIN
+            const vinPattern = /[A-HJ-NPR-Z0-9]{17}/g;
+            const matches = cleaned.match(vinPattern);
             
             if (matches) {
-                // Return the first valid VIN found
                 for (const match of matches) {
-                    if (validateVIN(match).valid) {
+                    // Additional validation - VINs cannot have I, O, Q
+                    const validation = validateVIN(match);
+                    if (validation.valid) {
                         return match;
                     }
                 }
             }
             
-            // Also try to find partial matches and clean them
-            // Sometimes OCR misreads characters
-            const cleanedText = text
-                .replace(/[^A-Z0-9]/g, '')
-                .replace(/O/g, '0')
-                .replace(/I/g, '1')
-                .replace(/Q/g, '0');
-            
-            const cleanMatches = cleanedText.match(vinRegex);
-            if (cleanMatches) {
-                for (const match of cleanMatches) {
-                    // Re-validate after cleaning
-                    const reValidate = match.replace(/[IOQ]/g, '');
-                    if (reValidate.length === 17) {
-                        return match;
+            // Try sliding window approach for partial matches
+            const chars = cleaned.replace(/[^A-HJ-NPR-Z0-9]/g, '');
+            if (chars.length >= 17) {
+                for (let i = 0; i <= chars.length - 17; i++) {
+                    const potential = chars.substring(i, i + 17);
+                    const validation = validateVIN(potential);
+                    if (validation.valid) {
+                        return potential;
                     }
                 }
             }
@@ -2077,6 +2369,7 @@
         function closeConfirmation() {
             document.getElementById('confirmModal').classList.remove('active');
             scannedVIN = '';
+            isProcessing = false;
         }
         
         function editScannedVIN() {
@@ -2108,6 +2401,16 @@
         document.getElementById('confirmModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeConfirmation();
+            }
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (tesseractWorker) {
+                tesseractWorker.terminate();
+            }
+            if (scannerStream) {
+                scannerStream.getTracks().forEach(track => track.stop());
             }
         });
     </script>
